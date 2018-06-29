@@ -16,7 +16,7 @@ body{
 .box{
     width: 576px;
     border: 1px solid gray;
-    background: rgb(131, 192, 116);
+    background: #58bc58;
 }
 
 .box .middleBox{
@@ -41,6 +41,10 @@ body{
     background: rgb(43, 226, 186);
 }
 
+.box .middleBox .digOut{
+    background: #FFEB3B;
+}
+
 #select{
     position: absolute;
     width: 108px;
@@ -58,6 +62,8 @@ body{
     border: 1px solid gray;
     margin: 2px;
     text-align: center; 
+    cursor: pointer;
+
 }
 
 #select>li:hover{

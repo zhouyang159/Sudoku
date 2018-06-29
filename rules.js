@@ -2,8 +2,9 @@ var rules = (function () {
 
     var rules = {};
 
+
     //检查中格子是否符合规则
-    var middleBoxCheck = function () {//这里还有问题 flag 返回的是最后一个循环的，要注意
+    var middleBoxCheck = function () {//这里的问题已经修复，程序会从当前不合格的中格子这里退出
 
         var mdlBoxArr = document.getElementsByClassName('middleBox');
         var flag = true;
@@ -18,15 +19,17 @@ var rules = (function () {
 
             flag = arrCheck(arr);
 
-            // if (flag === false) {
-            //     console.log(i + '中格数据 不符合 规则');
-            // } else {
-            //     console.log(i + '中格数据 符合 规则');
-            // }
+            if (flag === false) {
+                // console.log(i + '中格数据 不符合 规则');
+                break;
+            } else {
+                // console.log(i + '中格数据 符合 规则');
+            }
         }
 
         return flag;
     }
+
 
     //检查行是否符合规则
     var rowCheck = function () {
@@ -48,13 +51,14 @@ var rules = (function () {
                 if (flag === false) {
                     break outterLoop;
                 }
-                console.log(`第${rowIndex}行` + flag);
+                // console.log(`第${rowIndex}行` + flag);
                 rowIndex++
             }
         }
 
         return flag;
     }
+
 
     //检查列是否符合规则
     var colCheck = function () {
@@ -68,7 +72,7 @@ var rules = (function () {
                 var colArr = [];//构建行数组，然后进行判断是否合规
                 for (let i = m; i < 9; i += 3) {//让中格子竖直跳跃
                     for (let j = n; j < 9; j += 3) {//让小格子竖子跳跃
-                        console.log(mdlBoxArr[i].children[0].children[j]);
+                        // console.log(mdlBoxArr[i].children[0].children[j]);
                         var a = mdlBoxArr[i].children[0].children[j].innerText * 1;
                         colArr.push(a);
                     }
@@ -77,13 +81,14 @@ var rules = (function () {
                 if (flag === false) {
                     break outterLoop;
                 }
-                console.log(`第${colIndex}列` + flag);
+                // console.log(`第${colIndex}列` + flag);
                 colIndex++
             }
         }
 
         return flag;
     }
+
 
     //检查传入的数组是否有重复,0除外
     var arrCheck = function (arr) {
@@ -105,12 +110,36 @@ var rules = (function () {
         return flag;
     }
 
+    //检查所有空格是否填满
+    function isFull () {
+        var mdlBoxArr = document.getElementsByClassName('middleBox');
+        var arr = [];
+        var isFull = true;
+
+        for (var i = 0; i < 9; i++) {
+            var cellBoxs = mdlBoxArr[i].querySelectorAll('.smallBox');
+            for (var j = 0; j < cellBoxs.length; j++) {
+                arr.push(cellBoxs[j].innerText * 1)
+            }
+        }
+        
+        for (var i = 0; i < arr.length; i++) {
+            if(arr[i] === 0){
+                isFull = false;
+                break;
+            } 
+        }
+
+        return isFull;
+    }
+
     rules.middleBoxCheck = middleBoxCheck;
     rules.rowCheck = rowCheck;
     rules.colCheck = colCheck;
+    rules.isFull = isFull;
 
     return rules;
-})()
+})();
 
 
 
